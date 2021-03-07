@@ -1,0 +1,34 @@
+name: flutter_mvvm_example
+description: A new Flutter project.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # For DI and state management
+  riverpod: ^0.13.1
+  flutter_riverpod: ^0.13.1
+
+  # For Immutable class generation
+  freezed_annotation: ^0.14.0
+  json_serializable: ^4.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # For Code lint
+  pedantic: ^1.11.0
+
+  # For immutable class generation
+  freezed: ^0.14.0+1
+
+flutter:
+  uses-material-design: true

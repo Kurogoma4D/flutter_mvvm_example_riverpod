@@ -1,6 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_mvvm_example/models/controllers/memo_state_controller.dart';
 import 'package:flutter_mvvm_example/models/memo/memo.dart';
+import 'package:flutter_mvvm_example/utils/view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final _memosState =
@@ -11,18 +11,17 @@ final homeViewModel = ChangeNotifierProvider.autoDispose((ref) {
   return HomeViewModel(ref, memos);
 });
 
-class HomeViewModel extends ChangeNotifier {
-  HomeViewModel(this._ref, this.memos);
+class HomeViewModel extends ViewModel {
+  HomeViewModel(this.ref, this.memos);
 
-  final ProviderReference _ref;
+  @override
+  final ProviderReference ref;
   final List<Memo> memos;
 
   void onTapAddMemo() {
     final title = 'foo';
     final contents = 'bar';
 
-    _ref.read(memoStateControllerProvider).addMemo(title, contents);
+    ref.read(memoStateControllerProvider).addMemo(title, contents);
   }
-
-  void onTapUpdate() => _ref.read(memoStateControllerProvider).toggleUpdate();
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mvvm_example/models/controllers/app_state_controller.dart';
+import 'package:flutter_mvvm_example/view/widgets/change_title_dialog.dart';
 import 'package:flutter_mvvm_example/view_model/home_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,14 +11,24 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('HOME'),
+        title: const _HomeTitle(),
       ),
       body: const _Memos(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => context.read(homeViewModel).onTapUpdate(),
-        child: Icon(Icons.update),
+        onPressed: () => showChangeTitleDialog(context),
+        child: Icon(Icons.title),
       ),
     );
+  }
+}
+
+class _HomeTitle extends ConsumerWidget {
+  const _HomeTitle({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, ScopedReader watch) {
+    final title = watch(appStateControllerProvider.state).title;
+    return Text(title);
   }
 }
 

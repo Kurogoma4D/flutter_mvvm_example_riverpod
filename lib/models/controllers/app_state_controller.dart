@@ -2,7 +2,8 @@ import 'package:flutter_mvvm_example/models/app_state/app_state.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final appStateControllerProvider =
-    StateNotifierProvider((_) => AppStateController());
+    StateNotifierProvider<AppStateController, AppState>(
+        (_) => AppStateController());
 
 class AppStateController extends StateNotifier<AppState> {
   AppStateController() : super(AppState());

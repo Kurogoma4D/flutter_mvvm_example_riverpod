@@ -2,7 +2,8 @@ import 'package:flutter_mvvm_example/models/memo/memo.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final memoStateControllerProvider =
-    StateNotifierProvider((_) => MemoStateController());
+    StateNotifierProvider<MemoStateController, MemoState>(
+        (_) => MemoStateController());
 
 class MemoStateController extends StateNotifier<MemoState> {
   MemoStateController() : super(MemoState());

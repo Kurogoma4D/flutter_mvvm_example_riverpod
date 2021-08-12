@@ -7,7 +7,7 @@ final navigatorKeyProvider = Provider((_) => _navigatorKey);
 
 class App extends ConsumerWidget {
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
+  Widget build(BuildContext context, WidgetRef watch) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(

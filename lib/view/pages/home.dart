@@ -26,8 +26,8 @@ class _HomeTitle extends ConsumerWidget {
   const _HomeTitle({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final title = watch(appStateControllerProvider.state).title;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final title = ref.watch(appStateControllerProvider).title;
     return Text(title);
   }
 }
@@ -36,8 +36,8 @@ class _Memos extends ConsumerWidget {
   const _Memos({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final memos = watch(homeViewModel).memos;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final memos = ref.watch(homeViewModel).memos;
     return ListView(
       children: [
         for (final memo in memos)
@@ -48,7 +48,7 @@ class _Memos extends ConsumerWidget {
         MaterialButton(
           color: Colors.greenAccent,
           splashColor: Colors.greenAccent.shade400,
-          onPressed: () => context.read(homeViewModel).onTapAddMemo(),
+          onPressed: () => ref.read(homeViewModel).onTapAddMemo(),
           child: Icon(Icons.add, color: Colors.white),
         ),
       ],

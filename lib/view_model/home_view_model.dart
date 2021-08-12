@@ -4,24 +4,24 @@ import 'package:flutter_mvvm_example/utils/view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final _memosState =
-    Provider((ref) => ref.watch(memoStateControllerProvider.state).memos);
+    Provider((ref) => ref.watch(memoStateControllerProvider).memos);
 
 final homeViewModel = ChangeNotifierProvider.autoDispose((ref) {
   final memos = ref.watch(_memosState);
-  return HomeViewModel(ref, memos);
+  return HomeViewModel(ref.read, memos);
 });
 
 class HomeViewModel extends ViewModel {
-  HomeViewModel(this.ref, this.memos);
+  HomeViewModel(this.read, this.memos);
 
   @override
-  final ProviderReference ref;
+  final Reader read;
   final List<Memo> memos;
 
   void onTapAddMemo() {
     final title = 'foo';
     final contents = 'bar';
 
-    ref.read(memoStateControllerProvider).addMemo(title, contents);
+    read(memoStateControllerProvider.notifier).addMemo(title, contents);
   }
 }

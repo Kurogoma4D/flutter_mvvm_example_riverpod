@@ -13,8 +13,9 @@ dependencies:
     sdk: flutter
 
   # For DI and state management
-  riverpod: ^0.13.1
-  flutter_riverpod: ^0.13.1
+  riverpod: ^1.0.0-dev.6
+  flutter_riverpod: ^1.0.0-dev.6
+  hooks_riverpod: ^1.0.0-dev.6
 
   # For Models
   freezed_annotation: ^0.14.0

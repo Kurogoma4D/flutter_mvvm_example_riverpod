@@ -10,10 +10,10 @@ void showChangeTitleDialog(BuildContext context) => showDialog(
     );
 
 final _dialogControllerProvider = ChangeNotifierProvider.autoDispose(
-    (ref) => _ChangeTitleDialogController(ref));
+    (ref) => _ChangeTitleDialogController(ref.read));
 
 final _textEditingController = Provider.autoDispose((ref) {
-  final title = ref.read(appStateControllerProvider.state).title;
+  final title = ref.read(appStateControllerProvider).title;
   return TextEditingController(text: title);
 });
 
@@ -24,9 +24,9 @@ class _ChangeTitleDialogController extends ViewModel {
   bool get isProcessing => _isProcessing;
 
   @override
-  final ProviderReference ref;
+  final Reader read;
 
-  _ChangeTitleDialogController(this.ref);
+  _ChangeTitleDialogController(this.read);
 
   void onCompleteEditing() async {
     final isValidTitle = _formKey.currentState?.validate() ?? false;
@@ -35,8 +35,8 @@ class _ChangeTitleDialogController extends ViewModel {
     _isProcessing = true;
     notifyListeners();
 
-    final title = ref.read(_textEditingController).text;
-    await ref.read(appStateControllerProvider).setAppTitle(title);
+    final title = read(_textEditingController).text;
+    await read(appStateControllerProvider.notifier).setAppTitle(title);
 
     Navigator.of(buildContext).pop();
   }
@@ -73,17 +73,17 @@ class _TitleForm extends ConsumerWidget {
   const _TitleForm({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    final controller = watch(_textEditingController);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controller = ref.watch(_textEditingController);
     return Form(
       key: _formKey,
       child: TextFormField(
         controller: controller,
-        validator: context.read(_dialogControllerProvider).validationInput,
+        validator: ref.read(_dialogControllerProvider).validationInput,
         autovalidateMode: AutovalidateMode.always,
         textInputAction: TextInputAction.done,
         onEditingComplete: () =>
-            context.read(_dialogControllerProvider).onCompleteEditing(),
+            ref.read(_dialogControllerProvider).onCompleteEditing(),
       ),
     );
   }
@@ -93,9 +93,9 @@ class _LoadingOverlay extends ConsumerWidget {
   const _LoadingOverlay({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ScopedReader watch) {
-    // TODO: selectできるようにする
-    final isProcessing = watch(_dialogControllerProvider).isProcessing;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isProcessing = ref
+        .watch(_dialogControllerProvider.select((value) => value.isProcessing));
     return isProcessing
         ? DecoratedBox(
             decoration: BoxDecoration(color: Colors.black12),

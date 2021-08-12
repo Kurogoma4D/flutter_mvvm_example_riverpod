@@ -6,8 +6,8 @@ abstract class ViewModel extends ChangeNotifier with ViewModelMixin {}
 
 mixin ViewModelMixin {
   @protected
-  ProviderReference get ref;
+  Reader get read;
 
   BuildContext get buildContext =>
-      ref.read(navigatorKeyProvider).currentState!.overlay!.context;
+      read(navigatorKeyProvider).currentState!.overlay!.context;
 }

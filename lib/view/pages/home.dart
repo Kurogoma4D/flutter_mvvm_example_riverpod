@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_example/models/controllers/app_state_controller.dart';
+import 'package:flutter_mvvm_example/view/pages/child_page.dart';
 import 'package:flutter_mvvm_example/view/widgets/change_title_dialog.dart';
 import 'package:flutter_mvvm_example/view_model/home_view_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,6 +41,11 @@ class _Memos extends ConsumerWidget {
     final memos = ref.watch(homeViewModel).memos;
     return ListView(
       children: [
+        MaterialButton(
+          onPressed: () => Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => ChildPage())),
+          child: Icon(Icons.pages),
+        ),
         for (final memo in memos)
           ListTile(
             title: Text(memo.title),
